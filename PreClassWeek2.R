@@ -97,6 +97,9 @@ results in 10 exponentially distributed numbers with a rate \(\lambda=5\). If yo
   
   e. Calculate the mean of the 371st column of `big.exp.draws.1.mat`.
   
-  
+  mean(big.exp.draws.1.mat,ncol=371)
   
   f. Now, find the means of all 1000 columns of `big.exp.draws.1.mat` simultaneously. Plot the histogram of column means.  Explain why its shape does not match the histogram in problem 5b).
+
+col_means<-mean(big.exp.draws.1.mat,ncol=n())
+hist(col_means)
