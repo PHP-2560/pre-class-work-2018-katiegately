@@ -6,6 +6,6 @@ This folder will be where you complete your pre-class each week. The first time 
 Before you continue, Edit this document with:
 
 
-- Preferred Name: _________________________________
-- Brown Name: ___________________________
-- Brown E-mail: ______________________
+- Preferred Name: _________Katie Gately_______
+- Brown Name: __________Kaitlin Gately______
+- Brown E-mail: kaitlin_gately@brown.edu______
