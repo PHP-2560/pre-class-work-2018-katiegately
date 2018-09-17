@@ -51,20 +51,20 @@ means<-c(mean(exp.draws.1),mean(exp.draws.2),mean(exp.draws.5),mean(exp.draws.7.
 rates<-c(1,0.2,5,7.3,10)
 plot(means,rates,main="Means vs Rates")
 
-#As the rate increases, the means decrease. This relationship is exponential.
+As the rate increases, the means decrease. This relationship is exponential.
 
     b. The standard deviations versus the rates.
     
 sds<-c(sd(exp.draws.1),sd(exp.draws.2),sd(exp.draws.5),sd(exp.draws.7.3),sd(exp.draws.10))
 plot(sds,rates,main="Standard Deviation vs. Rates")
 
-#As the rate increases, the standard deviations decrease. This relationship is exponential.
+As the rate increases, the standard deviations decrease. This relationship is exponential.
 
     c. The means versus the standard deviations.
 
 plot(means,sds,main="Means vs. Standard Deviation")
 
-#There is a positive linear relationship between the means and the standard deviation. 
+There is a positive linear relationship between the means and the standard deviation. 
 
 For each plot, explain in words what's going on.
 
@@ -81,7 +81,7 @@ sd(big.exp.draws.1)
     b. Plot a histogram of `big.exp.draws.1`.  Does it match the function \(1-e^{-x}\)?  Should it? 
     
 hist(big.exp.draws.1)
-#The histogram does and should match the expoential function. 
+The histogram does and should match the exponential function. 
 
     c. Find the mean of all of the entries in `big.exp.draws.1` which are strictly greater than 1. You may need to first create a new vector to identify which elements satisfy this.
 
@@ -96,7 +96,11 @@ matrix_hist<-hist(big.exp.draws.1.mat)
 
     e. Calculate the mean of the 371st column of `big.exp.draws.1.mat`.
     
-
+mean(big.exp.draws.1.mat,ncol=371)
 
     f. Now, find the means of all 1000 columns of `big.exp.draws.1.mat` simultaneously. Plot the histogram of column means.  Explain why its shape does not match the histogram in problem 5b).
-   
+    
+col_means<-colMeans(big.exp.draws.1.mat)
+hist(col_means,main="Column Means")
+
+The shape of this histogram is not the same shape because it is plotting the means, which are all very close to one, following a normal distribution. 
