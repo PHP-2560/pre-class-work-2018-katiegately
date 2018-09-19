@@ -94,6 +94,8 @@ mean(big.exp.draws.1.1)
 big.exp.draws.1.mat<-matrix(data=big.exp.draws.1,nrow=1100,ncol=1000)
 matrix_hist<-hist(big.exp.draws.1.mat)
 
+The histogram for both matrices looks the same. 
+
     e. Calculate the mean of the 371st column of `big.exp.draws.1.mat`.
     
 mean(big.exp.draws.1.mat,ncol=371)
