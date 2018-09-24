@@ -11,9 +11,9 @@ We will work with the dataset called [gapminder](https://github.com/jennybc/gapm
 
 
 ```{r}
+library(plyr)
 library(dplyr)
 library(gapminder)
-gapminder
 ```
 
 
@@ -23,12 +23,99 @@ gapminder
 Use **dplyr** functions to address the following questions:
 
 1. How many unique countries are represented per continent?
+
+```{r}
+unique_country<-gapminder %>%
+  group_by(continent) %>%
+  distinct(country) %>%
+  arrange(continent)
+colSums(table(unique_country))
+```
+#There are 52 unique countries in Africa, 25 in the Americas, 33 in Asia, 30 in Europe, and 2 in Oceania. 
+
 2. Which European nation had the lowest GDP per capita in 1997? 
+
+```{r}
+gapminder %>%
+  filter(continent == "Europe", year=="1997") %>%
+  arrange(gdpPercap)
+```
+#Albania had the lowest GDP per capita in 1997. 
+
 3. According to the data available, what was the average life expectancy across each continent in the 1980s?
+
+```{r}
+gapminder %>%
+  group_by(continent) %>%
+  filter(year >= "1980", year <= "1989") %>%
+  summarize(avg_le = mean(lifeExp))
+```
+#In the 1980s, the average life expenctancy was 52.49 in Africa, 67.16 in the Americas, 63.73 in Asia, 73.22 in Europe, and 74.81 in Oceania. 
+
 4. What 5 countries have the highest total GDP over all years combined?
+
+```{r}
+gapminder %>%
+  group_by(country) %>%
+  summarise(sum_GDP = sum(gdpPercap)) %>%
+  arrange(desc(sum_GDP))
+```
+#The five countries with the highest total GDP over all years combined are Kuwait, Switzerland, Norway, United States, and Canada. 
+
 5. What countries and years had life expectancies of _at least_ 80 years? _N.b. only output the columns of interest: country, life expectancy and year (in that order)._
+
+```{r}
+gapminder %>%
+  group_by(country) %>%
+  filter(lifeExp >= "80") %>%
+  select(country, lifeExp, year)
+```
+#The countries with life expectancies over 80 are the following: Australia (2002,2007), Canada (2007), France (2007), Hong Kong, China (1997,2002,2007), Iceland (2002,2007), Israel (2007), Italy (2002,2007), Japan (1997,2002.2007), New Zealand (2007), Norway (2007), Spain (2007), Sweden (2002,2007), and Switzerland (2002,2007). 
+
 6. What 10 countries have the strongest correlation (in either direction) between life expectancy and per capita GDP?
+
+```{r}
+xx <- data.frame(group = gapminder$country, a = gapminder$lifeExp , b = gapminder$gdpPercap)
+head(xx)
+require(plyr)
+func <- function(xx)
+return(data.frame(COR = cor(xx$a, xx$b)))
+cor<-ddply(xx, .(group), func)
+arrange(cor, desc(COR))
+```
+#The 10 countries with the strongest correlation between life expectancy and per capita gdp are France, Austria, Belgium, Norway, Oman, United Kingdom, Italy, Israel, Denmark, and Australia.  
+
 7. Which combinations of continent (besides Asia) and year have the highest average population across all countries? _N.b. your output should include all results sorted by highest average population_. With what you already know, this one may stump you. See [this Q&A](http://stackoverflow.com/q/27207963/654296) for how to `ungroup` before `arrange`ing. This also [behaves differently in more recent versions of dplyr](https://github.com/hadley/dplyr/releases/tag/v0.5.0).
+
+```{r}
+gapminder %>%
+  filter(continent != "Asia") %>%
+  summarise(avg_pop = mean(pop)) %>%
+  ungroup() %>%
+  arrange(desc(avg_pop))
+```
+
 8. Which three countries have had the most consistent population estimates (i.e. lowest standard deviation) across the years of available data? 
+
+```{r}
+gapminder %>%
+  group_by(country,pop)%>%
+  distinct(country) %>%
+  mutate(sd = sd(pop)) %>%
+  arrange(sd)
+```
+
 9. Subset **gm** to only include observations from 1992 and store the results as **gm1992**. What kind of object is this?
+
+```{r}
+gm1992<- gapminder %>%
+  filter(year == "1992")
+typeof(gm1992)
+```
+#This is a list that only includes observations for the year 1992. 
+
 10. Which observations indicate that the population of a country has *decreased* from the previous year **and** the life expectancy has *increased* from the previous year? See [the vignette on window functions](https://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html).
+
+```{r}
+
+```
