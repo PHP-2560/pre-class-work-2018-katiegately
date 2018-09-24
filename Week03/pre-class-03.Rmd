@@ -117,5 +117,9 @@ typeof(gm1992)
 10. Which observations indicate that the population of a country has *decreased* from the previous year **and** the life expectancy has *increased* from the previous year? See [the vignette on window functions](https://cran.r-project.org/web/packages/dplyr/vignettes/window-functions.html).
 
 ```{r}
-
+gapminder %>%
+  group_by(country) %>%
+  filter(pop < lag(pop), lifeExp > lag(lifeExp)) %>%
+  select(country,year,lifeExp,pop)
 ```
+#The countries with decreased population from a previous year and increased life expectancy from a previous year are as follows: Afghanistan (1982), Bosnia and Herzergovina (1992,1997), Bulgaria (2002,2007), Croatia (1997), Czech Republic (1997,2002,2007), Equatorial Guinea (1977), Germany (1977,1987), Guinea-Bissau (1967), Hungary (1987,1997,2002,2007), Ireland (1857,1962), Kuwait (1992), Lebanon (1982), Montenegro (2007), Poland (2002,2007), Portugal (1972), Romania (2002,2007), Rwanda (1997), Serbia (2002), Slovenia (2002,2007), Switzerland (1977), Trinidad and Tobago (1992,2007), and West Bank and Gaza (1972). 
