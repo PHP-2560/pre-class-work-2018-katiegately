@@ -5,35 +5,45 @@ Katie Gately
 
 Make sure you commit this often with meaningful messages. 
 
-
-
+```{r}
+library(tidyverse)
+```
 
 ### Question 1:
 
 Using a loop, print the integers from 1 to 50. 
 
 ```{r}
-
+output1 <- c(1:50)
+ for (x in output1) {
+   print(x)
+ }
 ```
+
 
 ### Question 2:
 
 A.  Using a loop, add all the integers between 0 and 1000.
 
 ```{r}
-loop_a<- function(a) {sum(1:1000)}
+sum(seq(from =0, to = 1000, by =1))
 ```
 B. Now, add all the EVEN integers between 0 and 1000 (hint: use seq())
 
 ```{r}
-
+sum(seq(from = 0, to = 1000, by = 2))
 ```
 
 C. Now, repeat A and B WITHOUT using a loop.
+#Part A
 ```{r}
-
+sum(0:1000)
 ```
-
+#Part B
+```{r}
+is.even <- function(x){ x %% 2 == 0 } 
+sum(0,1000,is.even=TRUE)
+```
 ### Question 3:
 
 Here is a dataframe of survey data containing 5 questions :
@@ -53,7 +63,13 @@ The response to each question should be an integer between 1 and 5. Obviously, w
 A. Using a loop, create a new dataframe called survey.clean where all the invalid values (those that are not integers between 1 and 5) are set to NA.
 
 ```{r}
-
+survey.clean <- 
+  for (su in survey) {
+    if (su > 5 | su < 1) {
+  print("NA")
+  break 
+}
+}
 ```
 
 B. Now, again using a loop, add a new column to the dataframe called “invalid.answers” that indicates, for each participant, how many bad answers they gave.
