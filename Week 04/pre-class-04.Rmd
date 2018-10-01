@@ -26,23 +26,29 @@ output1 <- c(1:50)
 A.  Using a loop, add all the integers between 0 and 1000.
 
 ```{r}
-sum(seq(from =0, to = 1000, by =1))
+for (x in 1:1000) {
+  print(sum(seq(0,1000,1)))
+  break
+}
 ```
+
 B. Now, add all the EVEN integers between 0 and 1000 (hint: use seq())
 
 ```{r}
-sum(seq(from = 0, to = 1000, by = 2))
+for (x in 1:1000) {
+  print(sum(seq(0,1000,2)))
+  break
+}
 ```
 
 C. Now, repeat A and B WITHOUT using a loop.
 #Part A
 ```{r}
-sum(0:1000)
+sum(seq(from =0, to = 1000, by =1))
 ```
 #Part B
 ```{r}
-is.even <- function(x){ x %% 2 == 0 } 
-sum(0,1000,is.even=TRUE)
+sum(seq(from = 0, to = 1000, by = 2))
 ```
 ### Question 3:
 
