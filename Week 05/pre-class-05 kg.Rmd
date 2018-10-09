@@ -20,7 +20,6 @@ wcgs <- read.dta("~/Library/Mobile Documents/com~apple~CloudDocs/Brown/2560 R/Pr
 The data has the following variables:
 
 
-
 WCGS has the following variables:
 
 -----------------------------------------------------------
@@ -91,19 +90,25 @@ bmi     Body Mass Index
 A. Create a function called standardize.me() that takes a numeric vector as an argument, and returns the standardized version of the vector. 
 
 ```{r}
-
+standardize_me <- function(is.numeric) {
+  output <- is.numeric(output)
+} 
 ```
 
 B. Assign all the numeric columns of the original WCGS dataset to a new dataset called WCGS.new.
 
 ```{r}
-
+library(dplyr)
+wcgs.new <- wcgs %>%
+  select(id,age,height,weight,sbp,dbp,chol,ncigs,time169,bmi)
 ```
 
 C. Using a loop and your new function, standardize all the variables WCGS.new dataset.
 
 ```{r}
-
+for (i in 1:length(wcgs.new)) {
+  standardize_me()
+}
 ```
 
 D. What should the mean and standard deviation of all your new standardized variables be? Test your prediction by running a loop
@@ -117,12 +122,26 @@ D. What should the mean and standard deviation of all your new standardized vari
 A. Using a loop, calculate the mean weight of the subjects separated by the type of CHD they have.
 
 ```{r}
-
+for (typchd69 in wcgs) {
+  if (typchd69 =="1") {
+    mean(wcgs$weight)
+  } else if (typchd69 =="2") {
+    mean(wcgs$weight)
+  } else {
+    mean(wcgs$weight)
+  }
+}
 ```
 
 B. Now do the same thing, but now don’t use a loop
 
 ```{r}
+type1<-subset(wcgs,typchd69 = "1")
+type2<-subset(wcgs,typchd69 = "2")
+type3<-subset(wcgs,typchd69 = "3")
 
+mean(type1$weight)
+mean(type2$weight)
+mean(type3$weight)
 ```
 
