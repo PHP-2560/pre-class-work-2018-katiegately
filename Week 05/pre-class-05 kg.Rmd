@@ -90,9 +90,12 @@ bmi     Body Mass Index
 A. Create a function called standardize.me() that takes a numeric vector as an argument, and returns the standardized version of the vector. 
 
 ```{r}
-standardize_me <- function(is.numeric) {
-  output <- is.numeric(output)
-} 
+standardize.me <- function(x) {
+  for (i in x) {
+  output <- (x - mean(x,na.rm=TRUE)) / sd(x,na.rm=TRUE)
+  x
+  } 
+}
 ```
 
 B. Assign all the numeric columns of the original WCGS dataset to a new dataset called WCGS.new.
@@ -100,21 +103,32 @@ B. Assign all the numeric columns of the original WCGS dataset to a new dataset 
 ```{r}
 library(dplyr)
 wcgs.new <- wcgs %>%
-  select(id,age,height,weight,sbp,dbp,chol,ncigs,time169,bmi)
+  select_if(is.numeric)
+
+unlist(apply(wcgs.new, 1 ,as.numeric)) 
 ```
 
 C. Using a loop and your new function, standardize all the variables WCGS.new dataset.
 
 ```{r}
 for (i in 1:length(wcgs.new)) {
-  standardize_me()
+  standardize.me(i)
+  i
 }
 ```
 
 D. What should the mean and standard deviation of all your new standardized variables be? Test your prediction by running a loop
 
 ```{r}
+#For the mean
+for (i in wcgs.new) {
+  print(mean(i,na.rm=TRUE))
+}
 
+#For the standard deviation
+for (i in wcgs.new) {
+  print(sd(i,na.rm=TRUE))
+}
 ```
 
 ### Question 2: Looping to Calculate
@@ -122,13 +136,14 @@ D. What should the mean and standard deviation of all your new standardized vari
 A. Using a loop, calculate the mean weight of the subjects separated by the type of CHD they have.
 
 ```{r}
-for (typchd69 in wcgs) {
+for (i in 1:length(wcgs)) {
   if (typchd69 =="1") {
-    mean(wcgs$weight)
+    output<-mean(wcgs$weight)
   } else if (typchd69 =="2") {
-    mean(wcgs$weight)
+    output<-mean(wcgs$weight)
   } else {
-    mean(wcgs$weight)
+    output<-mean(wcgs$weight)
+    break
   }
 }
 ```
