@@ -2,35 +2,60 @@ Katie Gately
 
 # pre-class
 
-
 Make sure you commit this often with meaningful messages. 
-
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-
 1. Read the source code for each of the following three functions, puzzle out what they do, and then brainstorm better names.
 
-```
+```{r}
 f1 <- function(string, prefix) {
-  substr(string, 1, nchar(prefix)) == prefix
-}
+  substr(string, 1, nchar(prefix)) == prefix  #Extract or replace substrings in a character vector
+}                       #nchar returns a vector of prefix
 f2 <- function(x) {
-  if (length(x) <= 1) return(NULL)
+  if (length(x) <= 1) return(NULL)  #If x is less than 1, it returns NULL
   x[-length(x)]
 }
 f3 <- function(x, y) {
-  rep(y, length.out = length(x))
+  rep(y, length.out = length(x))  #Replicates values in y, output vector is length x 
 }
 ```
+Renaming ideas:
+f1: vector_prefix
+f2: abs_value
+f3: replace_x_y
 
 2. Compare and contrast rnorm() and MASS::mvrnorm(). How could you make them more consistent?
 
+```{r}
+library(MASS)
+?rnorm() #random variation of normal distribution: mean=0, sd=1
+?mvrnorm() #1+ samples from specified normal distribution
+```
+#Rnorm and mvrnorm both generate normal distributions. However, mvrnorm allows you to specify the variance through the Sigma argument, whereas rnorm takes a default standard deviation of 1. If you specify a different sd in rnorm, the two functions may be more consistent. 
 
 3. Use `lapply()` and an anonymous function to find the coefficient of variation (the standard deviation divided by the mean) for all columns in the mtcars dataset. 
 
+```{r}
+lapply(mtcars,function(x) (sd(x)/mean(x)))
+```
+
 4. Use vapply() to:
     a. Compute the standard deviation of every column in a numeric data frame.
+
+```{r}
+df<-data.frame("age"=3:5,"date"=3:5)
+df
+vapply(df,function(y) {sd(y)}, numeric(1),USE.NAMES = TRUE)
+```
+
     b. Compute the standard deviation of every numeric column in a mixed data frame. (Hint: you’ll need to use vapply() twice.)
+    
+```{r}
+mixed_df<-data.frame("weight"=2.4:6, "height" = "cm")
+mixed_df
+vapply(mixed_df[vapply(mixed_df, is.numeric, logical(1))], sd, numeric(1))
+```
+
