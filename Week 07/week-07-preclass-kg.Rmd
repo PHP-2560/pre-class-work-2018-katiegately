@@ -157,16 +157,94 @@ Note: you *must* stop playing if your player has gone bust. How will you handle 
     a. Is this a fair game? Simulate one hundred thousand sequential hands to determine the size of your return. Then repeat this simulation 99 more times to get a range of values to calculate the expectation.
     
 ```{r}
+markov_chain=function(bet,bankroll,p) {
+  b=0
+  prob<-p
+  while(bet>0) {
+    ProbVal=runif(1)
+    if(ProbVal <= p) {
+      bankroll = bankroll +bet
+      p = p+0.01
+    } else {
+      bankroll = bankroll-bet
+      p = prob
+    }
+    b=b+1
+    if(b==100000) {
+      break
+      }
+    if(bankroll < bet) { 
+      break
+      }
+  }
+  return(bankroll)
+}
 
+size_return = numeric()
+s = 100
+for(i in 1:s)
+{
+  dur5 = markov_chain(100,900,0.48)
+  size = c(size_return,dur5)
+}
+mean(size_return) #Not fair is the mean size is 0 
 ```
     b. Repeat this process but change the starting probability to a new value within 2% either way. Get the expected return after 100 repetitions. Keep exploring until you have a return value that is as fair as you can make it. Can you do this automatically?
     
 ```{r}
-
+set.seed(1)
+proportion=numeric()
+for (j in 1:20) {
+  size=numeric()
+  s = 100
+for(i in 1:s) {
+  dur6 = markov_chain(100,900,0.46+0.002*j)
+  size_return = c(size_return,dur6)
+}
+  nextproportion=length(which(size==0))/100
+  proportion=c(proportion,nextproportion)
+}
+proportion
 ```
     c. Repeat again, keeping the initial probability at 48%, but this time change the probability increment to a value different from 1%. Get the expected return after 100 repetitions. Keep changing this value until you have a return value that is as fair as you can make it.
     
 ```{r}
+set.seed(1)
+markov_chain1=function(bet,bankroll,p,increment)
+{
+  b=0
+  prob<-p
+  while(bet>0) {
+    ProbVal=runif(1)
+    if(ProbVal <= p) {
+      bankroll = bankroll +bet
+      p = p+increment
+    } else {
+      bankroll = bankroll-bet
+      p = prob
+    }
+    b=b+1
+    if(b==100000) {
+      break
+      }
+    if(bankroll < bet) {
+      break
+      }
+  }
+  return(bankroll)
+}
 
+proportion = numeric()
+for (z in 1:20) {
+size=numeric()
+s = 100
+for(i in 1:s) {
+  dur7 = markov_chain1(100,900,0.48,0.002*z)
+  size_return = c(size_return,dur7)
+}
+nextproportion=length(which(size==0))/100
+proportion=c(proportion,nextproportion)
+}
+proportion
 ```
 
