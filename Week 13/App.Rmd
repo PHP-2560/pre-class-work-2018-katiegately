@@ -8,4 +8,15 @@ library(shiny)
 ui <- fluidPage()
 server <- function(input, output) {}
 shinyApp(ui = ui, server = server)
+
+```
+
+Help
+
+```{r}
+standard_normal -> function(x){
+  for (i in 1:length(x)) {
+    pnorm(i)
+  }
+}
 ```
